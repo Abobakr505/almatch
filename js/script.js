@@ -75,11 +75,24 @@ function beginMatch() {
   $("n1").disabled = true;
   $("n2").disabled = true;
   $("m-startbtn").style.display = "none";
+  $("m-finish").disabled = false;
   if (mMode === "time") {
     mEnd = Date.now() + mTarget * 60000;
     mTick = setInterval(tick, 500);
     tick();
   }
+}
+
+function finishMatch() {
+  if (!mOn || mDone) return;
+  mDone = true;
+  $("gb1").disabled = true;
+  $("gb2").disabled = true;
+  $("m-finish").disabled = true;
+  clearInterval(mTick);
+  if (mS[0] > mS[1]) showResult($("n1").value, false);
+  else if (mS[1] > mS[0]) showResult($("n2").value, false);
+  else showResult("تعادل!", true);
 }
 
 function tick() {
